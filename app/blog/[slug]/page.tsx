@@ -17,10 +17,11 @@ export async function generateStaticParams() {
 }
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage(props: Props) {
+  const params = await props.params;
   // deduped
   const posts: Post[] = await fetch('http://localhost:3000/api/content').then(
     (res) => res.json()
